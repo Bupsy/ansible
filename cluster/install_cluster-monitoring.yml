@@ -1,0 +1,39 @@
+---
+
+- name: install cluster monitoring
+  hosts: all
+  become: true
+  tasks:
+
+  - name: update repo index
+    apt:
+      update_cache: yes
+
+  - name: install git
+    apt:
+      name: git
+      state: present
+
+  - name: install golang
+    apt:
+      name: golang
+      state: present
+
+  - name: install build-essential
+    apt:
+      name: build-essential
+      state: present
+
+  - name: download helm
+    get_url:
+      url: https://get.helm.sh/helm-v3.7.0-rc.2-linux-arm.tar.gz
+      dest: /root/
+    
+  - name: unarchive helm
+    unarchive:
+      src: /root/helm-v3.7.0-rc.2-linux-arm.tar.gz
+      dest: /root/helm
+      mode: 0755
+
+  - name: install helm
+    command: mv /root/helm/linux-arm/helm /usr/local/bin/helm
