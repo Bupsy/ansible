@@ -1,0 +1,7 @@
+---
+
+- name: update apt cache
+  tags: always
+  apt:
+    update_cache: yes
+  become: true

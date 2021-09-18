@@ -1,0 +1,8 @@
+---
+
+- name: install nfs client
+  tags: nfs,nfs-client
+  package:
+    name: nfs
+    state: present
+  become: true

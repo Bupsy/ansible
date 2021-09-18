@@ -1,0 +1,35 @@
+ALL HOSTS Initial setup
+
+
+Persistent Storage
+- install nfs server
+- install nfs client
+- setup share
+- setup fstabs
+- install k3s
+
+CONTROL HOSTS
+K3s tasks
+- install metallb
+- install github monitoring stack
+- install helm
+
+Helm tasks
+- add helm repos
+- pihole
+
+
+
+ALL
+- change pi password
+- set localization
+- upload ssh cert
+- set hostname
+- update apt cache
+- upgrade apt
+
+CONTROL
+- 
+
+
+NODES

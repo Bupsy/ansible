@@ -1,0 +1,20 @@
+- name: pre-reqs for all pis
+  hosts: all
+  gather_facts: false
+
+  roles:
+    - role: all
+
+- name: configure nodes
+  hosts: nodes
+  gather_facts: false
+
+  roles:
+    - role: nodes
+
+- name: configure control plane
+  hosts: control
+  gather_facts: false
+
+  roles:
+    - role: control

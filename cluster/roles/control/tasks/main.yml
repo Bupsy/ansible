@@ -1,0 +1,18 @@
+---
+
+- name: install git, golang, and build-essential
+  tags: git,golang,build-essential
+  package:
+    name:
+      - git
+      - golang
+      - build-essential
+    state: present
+  become: true
+
+- name: install nfs server
+  tags: nfs,nfs-server
+  package:
+    name: nfs-kernel-server
+    state: present
+  become: true
