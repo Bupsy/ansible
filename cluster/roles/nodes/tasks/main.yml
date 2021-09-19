@@ -3,6 +3,6 @@
 - name: install nfs client
   tags: nfs,nfs-client
   package:
-    name: nfs
+    name: nfs-common
     state: present
   become: true

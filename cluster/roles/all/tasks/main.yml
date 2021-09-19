@@ -7,7 +7,7 @@
     password: "{{ password | password_hash('sha512') }}"
   become: true
 
-- name: Update password used
+- name: update password used
   set_fact: ansible_become_pass="{{ password }}"
   become: true
 
@@ -17,6 +17,9 @@
     update_cache: yes
   become: true
 
-- name: update password used
-  set_fact: ansible_become_pass="{{ password }}"
-  become: true
+- name: create fileshare dir
+  file:
+    path: /mnt/storage
+    state: directory
+    owner: pi
+    mode: 0755

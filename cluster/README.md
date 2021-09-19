@@ -1,4 +1,4 @@
-# Ansible Things
+# Pi k3s home cluster
 
 ## Pre-reqs: ##
 - libpass
