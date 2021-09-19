@@ -5,9 +5,11 @@
     name: "{{ usr }}"
     update_password: always
     password: "{{ password | password_hash('sha512') }}"
+  become: true
 
 - name: Update password used
   set_fact: ansible_become_pass="{{ password }}"
+  become: true
 
 - name: update apt cache
   tags: always
@@ -17,3 +19,4 @@
 
 - name: update password used
   set_fact: ansible_become_pass="{{ password }}"
+  become: true
