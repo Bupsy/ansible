@@ -1,6 +1,12 @@
+---
+
 - name: pre-reqs for all pis
   hosts: all
   gather_facts: false
+
+  vars_prompt:
+    - name: password
+      prompt: Input new password for user
 
   roles:
     - role: all
