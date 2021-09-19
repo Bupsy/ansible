@@ -1,8 +1,8 @@
 # Ansible Things
 
-##Pre-reqs:##
+## Pre-reqs: ##
 - libpass
 - sshpass
 
-##Usage:##
-ansible-playbook -k main.yml
+## Usage: ##
+`ansible-playbook -k main.yml`
