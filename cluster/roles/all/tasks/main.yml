@@ -1,6 +1,7 @@
 ---
 
 - name: change pi password
+  tags: firstrun,changepass
   user:
     name: "{{ usr }}"
     update_password: always
@@ -8,8 +9,34 @@
   become: true
 
 - name: update password used
+  tags: firstrun,changepass,storenewpass
   set_fact: ansible_become_pass="{{ password }}"
   become: true
+
+- name: send ansible ssh key
+  tags: firstrun,sshkey
+  authorized_key:
+    user: pi
+    state: present
+    key: "{{ lookup('file', '/home/marc/.ssh/ansible.pub') }}"
+
+# - name: change hostname
+#   ansible.builtin.hostname:
+#    name: "{{ inventory_hostname }}"
+#    use: debian
+
+# - name: apple etc hosts template
+#   template:
+#     src: templates/hosts.j2
+#     dest: /etc/hosts
+#     owner: root
+#     group: root
+#     mode: 0644
+
+# - name: build hosts file
+#   lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_default_ipv4.address }} {{item}}" state=present
+#   when: hostvars[item].ansible_default_ipv4.address is defined
+#   with_items: groups['all']
 
 - name: update apt cache
   tags: always
@@ -23,3 +50,4 @@
     state: directory
     owner: pi
     mode: 0755
+  become: true
