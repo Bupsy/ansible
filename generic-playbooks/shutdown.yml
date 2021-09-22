@@ -1,0 +1,7 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    - name: Shutdown all machines
+      community.general.shutdown:
