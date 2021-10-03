@@ -6,7 +6,6 @@ CONTROL HOSTS
 K3s tasks
 - install metallb
 - install github monitoring stack
-- install helm
 
 Helm tasks
 - add helm repos
@@ -16,3 +15,7 @@ ALL
 - install k3s
 - set localization
 - set hostname
+
+
+FIX:
+Install helm smarterer
