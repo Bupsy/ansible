@@ -3,7 +3,7 @@ all:
   children:
     control:
       hosts:
-        pi@10.10.0.11:
+        10.10.0.11:
     nodes:
       hosts:
-        pi@10.10.0.[12:18]:
+        10.10.0.[12:18]:
