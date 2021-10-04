@@ -37,20 +37,25 @@
 - name: download helm
   tags: helm
   unarchive:
-    src: https://get.helm.sh/helm-v{{ helm_version  }}-linux-arm.tar.gz
-    dest: /home/pi
+    src: "https://get.helm.sh/helm-v{{ helm_version  }}-linux-arm.tar.gz"
+    dest: "{{ download_dir }}"
     remote_src: yes
 
 - name: install helm
   tags: helm
   copy:
-    src: /home/pi/linux-arm/helm
+    src: "{{ download_dir }}/linux-arm/helm"
     dest: /usr/local/bin/
     owner: root
     group: root
     mode: '0755'
     remote_src: yes
   become: true
+
+- name: cleanup helm download
+  file: 
+    path: "{{ download_dir }}/linux-arm"
+    state: absent
 
 - name: add pihole helm repo
   tags: pihole
@@ -59,12 +64,12 @@
     repo_url: https://mojo2600.github.io/pihole-kubernetes
   become: true
 
-- name: deploy pihole
-  tags: pihole
-  kubernetes.core.helm:
-    name: 
-    chart_ref: 
-    release_namespace: pihole
-    create_namespace: true
-    values_files:
-      - /home/pi/pihole-helm.yml
+# - name: deploy pihole
+#   tags: pihole
+#   kubernetes.core.helm:
+#     name: 
+#     chart_ref: 
+#     release_namespace: pihole
+#     create_namespace: true
+#     values_files:
+#       - {{ download_dir }}/pihole-helm.yml

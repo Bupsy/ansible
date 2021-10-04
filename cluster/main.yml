@@ -2,7 +2,7 @@
 
 - name: pre-reqs for all pis
   hosts: all
-  gather_facts: false
+  gather_facts: true
 
   vars_prompt:
     - name: password

@@ -2,3 +2,4 @@
 
 usr: pi
 helm_version: 3.7.0
+download_dir: /home/pi
