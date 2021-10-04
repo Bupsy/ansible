@@ -27,10 +27,17 @@
 #     version: master
 #   become: true
 
+- name: install python-yaml
+  tags: pyyaml
+  package:
+    name: python-yaml
+    state: present
+  become: true
+
 - name: download helm
   tags: helm
   unarchive:
-    src: https://get.helm.sh/helm-v3.7.0-linux-arm.tar.gz
+    src: https://get.helm.sh/helm-v{{ helm_version  }}-linux-arm.tar.gz
     dest: /home/pi
     remote_src: yes
 
@@ -44,3 +51,20 @@
     mode: '0755'
     remote_src: yes
   become: true
+
+- name: add pihole helm repo
+  tags: pihole
+  kubernetes.core.helm_repository:
+    name: mojo2600
+    repo_url: https://mojo2600.github.io/pihole-kubernetes
+  become: true
+
+- name: deploy pihole
+  tags: pihole
+  kubernetes.core.helm:
+    name: 
+    chart_ref: 
+    release_namespace: pihole
+    create_namespace: true
+    values_files:
+      - /home/pi/pihole-helm.yml
