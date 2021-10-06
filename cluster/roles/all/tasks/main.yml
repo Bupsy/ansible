@@ -19,20 +19,15 @@
   hostname:
     name: "{{ new_hostname }}"
 
-- name: fix /etc/hosts removing the old hostname
+- name: apply /etc/hosts template
   become: true
-  lineinfile:
-    state=present
-    dest=/etc/hosts
-    line="{{ ansible_default_ipv4.address }} {{ inventory_hostname }}"
-    regexp="^{{ ansible_default_ipv4.address }}"
-  when:
-    ansible_fqdn != inventory_hostname
-
-- name: validate ansible_fqdn == inventory_hostname
-  assert:
-    that:
-      ansible_fqdn == inventory_hostname
+  tags: hosts
+  ansible.builtin.template:
+    src: templates/hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: send ansible ssh key
   tags: firstrun,sshkey
