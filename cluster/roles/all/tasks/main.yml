@@ -1,17 +1,38 @@
 ---
 
 - name: change pi password
+  become: true
   tags: firstrun,changepass
   user:
     name: "{{ usr }}"
     update_password: always
     password: "{{ password | password_hash('sha512') }}"
-  become: true
 
 - name: update password used
+  become: true
   tags: firstrun,changepass,storenewpass
   set_fact: ansible_become_pass="{{ password }}"
+
+- name: change hostname
   become: true
+  tags: hostname
+  hostname:
+    name: "{{ new_hostname }}"
+
+- name: fix /etc/hosts removing the old hostname
+  become: true
+  lineinfile:
+    state=present
+    dest=/etc/hosts
+    line="{{ ansible_default_ipv4.address }} {{ inventory_hostname }}"
+    regexp="^{{ ansible_default_ipv4.address }}"
+  when:
+    ansible_fqdn != inventory_hostname
+
+- name: validate ansible_fqdn == inventory_hostname
+  assert:
+    that:
+      ansible_fqdn == inventory_hostname
 
 - name: send ansible ssh key
   tags: firstrun,sshkey
@@ -20,34 +41,16 @@
     state: present
     key: "{{ lookup('file', '/home/marc/.ssh/ansible.pub') }}"
 
-# - name: change hostname
-#   ansible.builtin.hostname:
-#    name: "{{ inventory_hostname }}"
-#    use: debian
-
-# - name: apple etc hosts template
-#   template:
-#     src: templates/hosts.j2
-#     dest: /etc/hosts
-#     owner: root
-#     group: root
-#     mode: 0644
-
-# - name: build hosts file
-#   lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_default_ipv4.address }} {{item}}" state=present
-#   when: hostvars[item].ansible_default_ipv4.address is defined
-#   with_items: groups['all']
-
 - name: update apt cache
+  become: true
   tags: always
   apt:
     update_cache: yes
-  become: true
 
 - name: create fileshare dir
+  become: true
   file:
     path: /mnt/storage
     state: directory
     owner: pi
     mode: 0755
-  become: true
