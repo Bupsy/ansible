@@ -4,20 +4,20 @@ all:
     control:
       hosts:
         10.10.0.11:
-          new_hostname: "RPI-01"
+          new_hostname: "rpi-01"
     nodes:
       hosts:
         10.10.0.12:
-          new_hostname: "RPI-02"
+          new_hostname: "rpi-02"
         10.10.0.13:
-          new_hostname: "RPI-03"
+          new_hostname: "rpi-03"
         10.10.0.14:
-          new_hostname: "RPI-04"
+          new_hostname: "rpi-04"
         10.10.0.15:
-          new_hostname: "RPI-05"
+          new_hostname: "rpi-05"
         10.10.0.16:
-          new_hostname: "RPI-06"
+          new_hostname: "rpi-06"
         10.10.0.17:
-          new_hostname: "RPI-07"
+          new_hostname: "rpi-07"
         10.10.0.18:
-          new_hostname: "RPI-08"
+          new_hostname: "rpi-08"
